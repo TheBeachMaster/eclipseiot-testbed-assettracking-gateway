@@ -160,12 +160,27 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 					}
 					m_startTime = 0;
 					m_connected = false;
+					
+					final List<BluetoothDevice> devices = new ArrayList<BluetoothDevice>();
+
+					String[] MACs = new String[] {
+							"24:71:89:BE:CE:04", "34:B1:F7:D1:44:15", "24:71:89:E8:9F:82"
+					};
+					
+					for(String mac : MACs) {
+						BluetoothDevice bluetoothDevice = m_bluetoothAdapter.getRemoteDevice(mac);
+						TiSensorTag tiSensorTag = new TiSensorTag(bluetoothDevice);
+						m_tiSensorTagMap.put(bluetoothDevice.getAdress(), tiSensorTag);
+					}
+										
 					m_handle = m_worker.scheduleAtFixedRate(new Runnable() {
 						@Override
 						public void run() {
-							checkScan();
+//							checkScan();
+							updateSensorTagReadings();
+
 						}
-					}, 0, 1, TimeUnit.SECONDS);
+					}, 0, m_scantime, TimeUnit.SECONDS);
 				}
 				else s_logger.warn("No Bluetooth adapter found ...");
 			} catch (Exception e) {
@@ -378,7 +393,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 		for (BluetoothDevice bluetoothDevice : scanResults) {
 			s_logger.info("Address " + bluetoothDevice.getAdress() + " Name " + bluetoothDevice.getName());
 
-			if (bluetoothDevice.getName().contains("SensorTag")) {
+			if (true || bluetoothDevice.getName().contains("SensorTag")) {
 				s_logger.info("TI SensorTag " + bluetoothDevice.getAdress() + " found.");
 				if ((!enableWhitelist && !searchSensorTagList(bluetoothDevice.getAdress()))
 						|| (enableWhitelist && deviceWhitelist.contains(bluetoothDevice.getAdress().toUpperCase())
@@ -394,11 +409,18 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 		
 		s_logger.debug("Found " + m_tiSensorTagMap.size() + " SensorTags");
 
+		updateSensorTagReadings();
+		
+	}
+	
+	private void updateSensorTagReadings() {
+		s_logger.info("*** UPDATE SENSORTAG READINGS ***");
+
 		// connect to TiSensorTags
 		for (TiSensorTag myTiSensorTag : m_tiSensorTagMap.values()) {
 			
 			if (!myTiSensorTag.isConnected()) {
-				s_logger.info("Connecting to TiSensorTag...");
+				s_logger.info("Connecting to TiSensorTag (" + myTiSensorTag.getBluetoothDevice().getAdress() + ")...");
 				m_connected = myTiSensorTag.connect();
 			}
 			else {
@@ -430,7 +452,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 							e.printStackTrace();
 						}
 					}
-					double[] temperatures = myTiSensorTag.readTemperature();
+					double[] temperatures = myTiSensorTag.readTemperatureByUuid();
 					
 					s_logger.debug("Ambient: " + temperatures[0] + " Target: " + temperatures[1]);
 					
@@ -452,7 +474,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 							e.printStackTrace();
 						}
 					}
-					double[] acceleration = myTiSensorTag.readAcceleration();
+					double[] acceleration = myTiSensorTag.readAccelerationByUuid();
 					
 					s_logger.debug("Acc X: " + acceleration[0] + " Acc Y: " + acceleration[1] + " Acc Z: " + acceleration[2]);
 					
@@ -470,7 +492,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 							e.printStackTrace();
 						}
 					}
-					float humidity = myTiSensorTag.readHumidity();
+					double humidity = myTiSensorTag.readHumidityByUuid();
 					s_logger.debug("Humidity: " + humidity);
 					
 					payload.addMetric("Humidity", humidity);
@@ -490,7 +512,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 							e.printStackTrace();
 						}
 					}
-					float[] magneticField = myTiSensorTag.readMagneticField();
+					float[] magneticField = myTiSensorTag.readMagneticFieldByUuid();
 					
 					s_logger.debug("Mag X: " + magneticField[0] + " Mag Y: " + magneticField[1] + " Mag Z: " + magneticField[2]);
 					
@@ -520,7 +542,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 							e.printStackTrace();
 						}
 					}
-					double pressure = myTiSensorTag.readPressure();
+					double pressure = myTiSensorTag.readPressureByUuid();
 					
 					s_logger.debug("Pre : " + pressure);
 					
@@ -541,7 +563,7 @@ public class BluetoothLe implements ConfigurableComponent, CloudClientListener, 
 							e.printStackTrace();
 						}
 					}
-					float[] gyroscope = myTiSensorTag.readGyroscope();
+					float[] gyroscope = myTiSensorTag.readGyroscopeByUuid();
 					
 					s_logger.debug("Gyro X: " + gyroscope[0] + " Gyro Y: " + gyroscope[1] + " Gyro Z: " + gyroscope[2]);
 					

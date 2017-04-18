@@ -174,14 +174,14 @@ public class GatewayRouter implements ConfigurableComponent {
                                 List<Map> metrics = (List<Map>) exchange.getIn().getBody();
                                 Map<String, String> map =  metrics.get(0); //Each line of the file produces a map of name/value pairs, but we only get one line at a time due to the splitter above
                                 for (Map.Entry<String, String> entry : map.entrySet()) {
-                                    payload.addMetric(entry.getKey(), Float.parseFloat(entry.getValue()));
+                                    payload.addMetric(entry.getKey(), Double.parseDouble(entry.getValue()));
                                 }
 
                                 exchange.getIn().setBody(payload);
                             }
                         })
                         .log("Sending CSV record")
-                        .toD("cloud:" + asString(properties, "topic.prefix") + "/assets/${file:name.noext}");
+                        .toD("cloud:" + asString(properties, "topic.prefix") + "/packages/${file:name.noext}");
 
                 //                        .to(KURA + TOPIC);
             }

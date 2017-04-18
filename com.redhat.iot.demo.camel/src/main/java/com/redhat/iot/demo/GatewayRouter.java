@@ -195,11 +195,11 @@ public class GatewayRouter implements ConfigurableComponent {
 //                        .log("Publishing Metrics (Inner) =>")
                         .wireTap("log:WireTap?showAll=true&multiline=true")
                         .wireTap("direct:checkSensors")
-                        .toD("cloud:demo-kit/assets/${exchangeProperty.deviceId}")
+                        .toD("cloud:iot-demo/packages/${exchangeProperty.deviceId}")
                         .end();
 
                 // Subscribe to topics on Everyware Cloud
-                //      from("cloud:demo-kit/assets/").
+                //      from("cloud:iot-demo/assets/").
                 from("direct:checkSensors").
                         choice().
                         when(simple("${body.metrics()[Light]} < 100"))
@@ -216,7 +216,7 @@ public class GatewayRouter implements ConfigurableComponent {
                             }
                         })
                         .log("Low Light Event for ${exchangeProperty.deviceId}")
-                        .toD("cloud:demo-kit/notification/${exchangeProperty.deviceId}")
+                        .toD("cloud:iot-demo/notification/${exchangeProperty.deviceId}")
                         //               .to("log:LowLightWarning") //?showAll=true&multiline=true")
                         .when(simple("${body.metrics()[Light]} > 275"))
                         .process(new Processor() {
@@ -232,7 +232,7 @@ public class GatewayRouter implements ConfigurableComponent {
                             }
                         })
                         .log("High Light Event for ${exchangeProperty.deviceId}")
-                        .toD("cloud:demo-kit/notification/${exchangeProperty.deviceId}")
+                        .toD("cloud:iot-demo/notification/${exchangeProperty.deviceId}")
                         //               .to("log:HighLightWarning?showAll=true&multiline=true")
                         .otherwise()
                         .process(new Processor() {
@@ -248,11 +248,11 @@ public class GatewayRouter implements ConfigurableComponent {
                             }
                         })
                         .log("Target Light Event for ${exchangeProperty.deviceId}")
-                        .toD("cloud:demo-kit/notification/${exchangeProperty.deviceId}");
+                        .toD("cloud:iot-demo/notification/${exchangeProperty.deviceId}");
                 //               .to("log:TargetLight");
 
 /*
-      from("cloud:demo-kit/notification/#")
+      from("cloud:iot-demo/notification/#")
             .process(new Processor() {
                @Override
                public void process(Exchange exchange) throws Exception {

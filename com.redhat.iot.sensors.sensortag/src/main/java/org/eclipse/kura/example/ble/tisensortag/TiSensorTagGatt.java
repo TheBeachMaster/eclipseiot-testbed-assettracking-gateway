@@ -31,7 +31,7 @@ public class TiSensorTagGatt {
 	// CC 2650
 	public static final String HANDLE_TEMP_SENSOR_VALUE_2650		= "0x0021";
 	public static final String HANDLE_TEMP_SENSOR_NOTIFICATION_2650	= "0x0022";
-	public static final String HANDLE_TEMP_SENSOR_ENABLE_2650		= "0x0024";
+	public static final String HANDLE_TEMP_SENSOR_ENABLE_2650		= "0x0027";
 	public static final String HANDLE_TEMP_SENSOR_PERIOD_2650		= "0x0026";
 	
 	public static final UUID UUID_TEMP_SENSOR_VALUE			    = UUID.fromString("f000aa01-0451-4000-b000-000000000000");
@@ -53,12 +53,12 @@ public class TiSensorTagGatt {
 	// CC2541
 	public static final String HANDLE_HUM_SENSOR_VALUE_2541			= "0x0038";
 	public static final String HANDLE_HUM_SENSOR_NOTIFICATION_2541	= "0x0039";
-	public static final String HANDLE_HUM_SENSOR_ENABLE_2541	    = "0x003c";
+	public static final String HANDLE_HUM_SENSOR_ENABLE_2541	    = "0x003f";
 	// CC2650
-	public static final String HANDLE_HUM_SENSOR_VALUE_2650			= "0x0029";
+	public static final String HANDLE_HUM_SENSOR_VALUE_2650			= "0x002c";
 	public static final String HANDLE_HUM_SENSOR_NOTIFICATION_2650	= "0x002a";
-	public static final String HANDLE_HUM_SENSOR_ENABLE_2650	    = "0x002c";
-	public static final String HANDLE_HUM_SENSOR_PERIOD_2650	    = "0x002E";
+	public static final String HANDLE_HUM_SENSOR_ENABLE_2650	    = "0x002f";
+	public static final String HANDLE_HUM_SENSOR_PERIOD_2650	    = "0x0031";
 
 	public static final UUID UUID_HUM_SENSOR_VALUE			    = UUID.fromString("f000aa21-0451-4000-b000-000000000000");
 	public static final UUID UUID_HUM_SENSOR_ENABLE		        = UUID.fromString("f000aa22-0451-4000-b000-000000000000");
@@ -89,7 +89,7 @@ public class TiSensorTagGatt {
 	// CC2650
 	public static final String HANDLE_PRE_SENSOR_VALUE_2650     	= "0x0031";
 	public static final String HANDLE_PRE_SENSOR_NOTIFICATION_2650	= "0x0032";
-	public static final String HANDLE_PRE_SENSOR_ENABLE_2650		= "0x0034";
+	public static final String HANDLE_PRE_SENSOR_ENABLE_2650		= "0x0037";
 	public static final String HANDLE_PRE_SENSOR_PERIOD_2650		= "0x0036";
 	
 	public static final UUID UUID_PRE_SENSOR_VALUE			    = UUID.fromString("f000aa41-0451-4000-b000-000000000000");
@@ -118,10 +118,10 @@ public class TiSensorTagGatt {
 
 	// Ambient Light sensor
 	// CC2650
-	public static final String HANDLE_OPTO_SENSOR_VALUE_2650		= "0x0041";
-	public static final String HANDLE_OPTO_SENSOR_NOTIFICATION_2650	= "0x0042";
-	public static final String HANDLE_OPTO_SENSOR_ENABLE_2650	    = "0x0044";
-	public static final String HANDLE_OPTO_SENSOR_PERIOD_2650	    = "0x0046";
+	public static final String HANDLE_OPTO_SENSOR_VALUE_2650		= "0x0044";
+	public static final String HANDLE_OPTO_SENSOR_NOTIFICATION_2650	= "0x0042"; //fixme
+	public static final String HANDLE_OPTO_SENSOR_ENABLE_2650	    = "0x0047";
+	public static final String HANDLE_OPTO_SENSOR_PERIOD_2650	    = "0x0049";
 	
 	public static final UUID UUID_OPTO_SENSOR_VALUE			    = UUID.fromString("f000aa71-0451-4000-b000-000000000000");
 	public static final UUID UUID_OPTO_SENSOR_ENABLE		    = UUID.fromString("f000aa72-0451-4000-b000-000000000000");
@@ -129,10 +129,10 @@ public class TiSensorTagGatt {
 	
 	// Movement sensor (accelerometer, gyroscope and magnetometer)
 	// CC2560
-	public static final String HANDLE_MOV_SENSOR_VALUE_2650			= "0x0039";
+	public static final String HANDLE_MOV_SENSOR_VALUE_2650			= "0x003C";
 	public static final String HANDLE_MOV_SENSOR_NOTIFICATION_2650	= "0x003A";
-	public static final String HANDLE_MOV_SENSOR_ENABLE_2650	    = "0x003C";
-	public static final String HANDLE_MOV_SENSOR_PERIOD_2650	    = "0x003E";
+	public static final String HANDLE_MOV_SENSOR_ENABLE_2650	    = "0x003F";
+	public static final String HANDLE_MOV_SENSOR_PERIOD_2650	    = "0x0041";
 	
 	public static final UUID UUID_MOV_SENSOR_VALUE			    = UUID.fromString("f000aa81-0451-4000-b000-000000000000");
 	public static final UUID UUID_MOV_SENSOR_ENABLE		        = UUID.fromString("f000aa82-0451-4000-b000-000000000000");
@@ -140,8 +140,8 @@ public class TiSensorTagGatt {
 
 	// IO Service (leds and buzzer)
 	// CC2560
-	public static final String HANDLE_IO_SENSOR_VALUE_2650		= "0x004E";
-	public static final String HANDLE_IO_SENSOR_ENABLE_2650	    = "0x0050";
+	public static final String HANDLE_IO_SENSOR_VALUE_2650		= "0x0051";
+	public static final String HANDLE_IO_SENSOR_ENABLE_2650	    = "0x0053";
 
 	public static final UUID UUID_IO_SENSOR_VALUE			    = UUID.fromString("f000aa65-0451-4000-b000-000000000000");
 	public static final UUID UUID_IO_SENSOR_ENABLE		        = UUID.fromString("f000aa66-0451-4000-b000-000000000000");

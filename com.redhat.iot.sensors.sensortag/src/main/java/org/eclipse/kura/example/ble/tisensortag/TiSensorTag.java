@@ -41,7 +41,7 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 	public TiSensorTag(BluetoothDevice bluetoothDevice) {
 		m_device = bluetoothDevice;
 		m_connected = false;
-		if (m_device.getName().contains("CC2650 SensorTag"))
+		if (m_device.getAdress().startsWith("24:71:89") || m_device.getName().contains("CC2650 SensorTag"))
 			CC2650 = true;
 		else
 			CC2650 = false;
@@ -524,7 +524,7 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 	 */
 	private float calculateHumidity(String value) {
 		
-		s_logger.debug("Received barometer value: " + value);
+		s_logger.debug("Received humidity value: " + value);
 		
 		byte[] valueByte = hexStringToByteArray(value.replace(" ", ""));
 		
@@ -1196,10 +1196,10 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 			int value;
 			String hexValue;
 			try {
-				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650), 16) | 0x01;
+				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValueByUuid(TiSensorTagGatt.UUID_IO_SENSOR_VALUE), 16) | 0x01;
 				hexValue = Integer.toHexString(value);
 				m_bluetoothGatt.writeCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650, hexValue.length() < 2 ? "0" + hexValue : hexValue);
-			} catch (KuraException e) {
+			} catch (Exception e) {
 				s_logger.error("Unable to read characteristic", e);
 			}
 		}
@@ -1216,10 +1216,10 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 			int value;
 			String hexValue;
 			try {
-				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650), 16) & 0xFE;
+				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValueByUuid(TiSensorTagGatt.UUID_IO_SENSOR_VALUE), 16) & 0xFE;
 				hexValue = Integer.toHexString(value);
 				m_bluetoothGatt.writeCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650, hexValue.length() < 2 ? "0" + hexValue : hexValue);
-			} catch (KuraException e) {
+			} catch (Exception e) {
 				s_logger.error("Unable to read characteristic", e);
 			}
 		}
@@ -1235,10 +1235,10 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 			int value;
 			String hexValue;
 			try {
-				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650), 16) | 0x02;
+				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValueByUuid(TiSensorTagGatt.UUID_IO_SENSOR_VALUE), 16) | 0x02;
 				hexValue = Integer.toHexString(value);
 				m_bluetoothGatt.writeCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650, hexValue.length() < 2 ? "0" + hexValue : hexValue);
-			} catch (KuraException e) {
+			} catch (Exception e) {
 				s_logger.error("Unable to read characteristic", e);
 			}
 		} else
@@ -1254,10 +1254,10 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 			int value;
 			String hexValue;
 			try {
-				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650), 16) & 0xFD;
+				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValueByUuid(TiSensorTagGatt.UUID_IO_SENSOR_VALUE), 16) & 0xFD;
 				hexValue = Integer.toHexString(value);
 				m_bluetoothGatt.writeCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650, hexValue.length() < 2 ? "0" + hexValue : hexValue);
-			} catch (KuraException e) {
+			} catch (Exception e) {
 				s_logger.error("Unable to read characteristic", e);
 			}
 		}
@@ -1277,7 +1277,7 @@ public class TiSensorTag implements BluetoothLeNotificationListener {
 				value = Integer.parseInt(m_bluetoothGatt.readCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650), 16) | 0x04;
 				hexValue = Integer.toHexString(value);
 				m_bluetoothGatt.writeCharacteristicValue(TiSensorTagGatt.HANDLE_IO_SENSOR_VALUE_2650, hexValue.length() < 2 ? "0" + hexValue : hexValue);
-			} catch (KuraException e) {
+			} catch (Exception e) {
 				s_logger.error("Unable to read characteristic", e);
 			}
 		}
